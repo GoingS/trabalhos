@@ -30,7 +30,7 @@ class Point{
     
     public void move(float dx, float dy){
         x = x + dx;
-        y = y + dy;
+        y = y + dy;  
     }
     
     public double distance(float x2, float y2){

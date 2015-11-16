@@ -1,1 +1,1 @@
-# trabalhos
+Trabalhos para Paradigmas.

@@ -1,0 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package postos.de.combustiveis;
+
+/**
+ *
+ * @author GoingS
+ */
+public class Data {
+    private int dia;
+    private int mes;
+    private int ano;
+    
+    
+    public Data(int novoDia, int novoMes, int novoAno){
+        this.dia = novoDia;
+        this.mes = novoMes;
+        this.ano = novoAno;
+    }
+}

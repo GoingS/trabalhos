@@ -20,4 +20,8 @@ public class Data {
         this.mes = novoMes;
         this.ano = novoAno;
     }
+    
+    public void showData(){
+        System.out.printf("%d/%d/%d\n", this.dia, this.mes, this.ano);
+    }
 }

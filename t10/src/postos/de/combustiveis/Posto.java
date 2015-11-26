@@ -41,9 +41,40 @@ public class Posto {
             System.out.println(combustiveis.get(i).getTipo());
     }
     
+    @Override
+    public String toString(){
+        return this.nomeFantasia;
+    }
+    public String getCnpj(){
+        return this.cnpj;
+    }
+    
+    public String getRazaoSocial(){
+        return this.razaoSocial;
+    }
+    
+    public String getNome(){
+        return this.nomeFantasia;
+    }
+    
+    public String getBandeira(){
+        return this.bandeira;
+    }
+    
+    public String getEndereco(){
+        return this.endereco;
+    }
+    
     public String getBairro(){
         return this.bairro;
     }
+    
+    public String getCep(){
+        return this.cep;
+    }
+    
+    
+    
     
     public void setCnpj(String novoCnpj){
         this.cnpj = novoCnpj;
@@ -53,7 +84,7 @@ public class Posto {
         this.razaoSocial = novaRazaoSocial;
     }
     
-    public void setNomeFantasia(String novoNomeFantasia){
+    public void setNome(String novoNomeFantasia){
         this.nomeFantasia = novoNomeFantasia;
     }
     

@@ -14,6 +14,10 @@ public class Data {
     private int mes;
     private int ano;
     
+    @Override
+    public String toString(){
+        return "" + this.dia + '/' + this.mes + '/' + this.ano;
+    }
     
     public Data(int novoDia, int novoMes, int novoAno){
         this.dia = novoDia;

@@ -16,11 +16,29 @@ public class Combustivel {
         this.preco = novoPreco;
     }
     
+    @Override
+    public String toString(){
+        return this.tipo;
+    }
+    
     public void showCombustivel(){
         System.out.println(this.tipo);
         dataColetaPreco.showData();
         System.out.println(this.preco);
     }
+    
+    public void setTipo(String novoTipo){
+        this.tipo = novoTipo;
+    }
+    
+    public void setData(Data novaData){
+        this.dataColetaPreco = novaData;
+    }
+    
+    public void setPreco(float precoNovo){
+        this.preco = precoNovo;
+    }
+    
     
     public String getTipo(){
         return this.tipo;

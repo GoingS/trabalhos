@@ -41,6 +41,10 @@ public class Posto {
             System.out.println(combustiveis.get(i).getTipo());
     }
     
+    public ArrayList<Combustivel> getCombustiveis(){
+        return this.combustiveis;
+    }
+    
     @Override
     public String toString(){
         return this.nomeFantasia;

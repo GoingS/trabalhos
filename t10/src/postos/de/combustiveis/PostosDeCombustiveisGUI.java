@@ -1,6 +1,7 @@
 package postos.de.combustiveis;
 
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -15,14 +16,15 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     
     private ArrayList<Posto> listaPostos;
     
+    
     public PostosDeCombustiveisGUI(ArrayList<Posto> listaPostosNova) {
         initComponents();
-        this.listaPostos = listaPostosNova;
-        
-        for (Posto listaPosto : listaPostosNova) {
-            postosBox.addItem(listaPosto);
-        }
         this.setTitle("Postos de Combustíveis");
+        this.setResizable(false);
+        this.listaPostos = listaPostosNova;
+        this.atualizarBox();
+        this.atualizarListaCombustiveis();
+        this.preencherCaixasTexto((Posto) postosBox.getSelectedItem());
     }
 
     private PostosDeCombustiveisGUI() {
@@ -52,7 +54,7 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         botaoAdicionar = new javax.swing.JButton();
         botaoRemover = new javax.swing.JButton();
         botaoEditar = new javax.swing.JButton();
-        nomeField = new javax.swing.JTextField();
+        dataCombustivelField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -60,6 +62,15 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaCombustiveisList = new javax.swing.JList();
+        nomeField1 = new javax.swing.JTextField();
+        tipoCombustivelField1 = new javax.swing.JTextField();
+        precoCombustivelField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -80,22 +91,16 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         postoLabel.setText("Posto:");
 
         cnpjField.setEditable(false);
-        cnpjField.setText("CNPJ");
 
         razaoSocialField.setEditable(false);
-        razaoSocialField.setText("Razão");
 
         bandeiraField.setEditable(false);
-        bandeiraField.setText("Bandeira");
 
         enderecoField.setEditable(false);
-        enderecoField.setText("Endereço");
 
         bairroField.setEditable(false);
-        bairroField.setText("Bairro");
 
         cepField.setEditable(false);
-        cepField.setText("CEP");
 
         botaoSalvar.setText("Salvar");
         botaoSalvar.setEnabled(false);
@@ -126,8 +131,7 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
             }
         });
 
-        nomeField.setEditable(false);
-        nomeField.setText("Nome");
+        dataCombustivelField.setEditable(false);
 
         jLabel1.setText("Nome:");
 
@@ -144,91 +148,145 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         jLabel8.setText("Cep:");
         jLabel8.setToolTipText("");
 
+        listaCombustiveisList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaCombustiveisListMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaCombustiveisList);
+
+        nomeField1.setEditable(false);
+
+        tipoCombustivelField1.setEditable(false);
+
+        precoCombustivelField.setEditable(false);
+
+        jLabel9.setText("Tipo:");
+
+        jLabel10.setText("Data:");
+
+        jLabel11.setText("Preço:");
+
+        jLabel12.setText("Combustíveis:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(postoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(nomeField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cnpjField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(razaoSocialField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(bandeiraField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(enderecoField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                                        .addComponent(bairroField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(postosBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(postoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(postosBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cnpjField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(razaoSocialField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bandeiraField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bairroField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nomeField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(438, 438, 438))
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabel12)
+                                .addGap(93, 93, 93))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel11)
+                                        .addComponent(tipoCombustivelField1)
+                                        .addComponent(dataCombustivelField)
+                                        .addComponent(precoCombustivelField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(postoLabel)
-                    .addComponent(postosBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cnpjField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(razaoSocialField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bandeiraField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bairroField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(botaoSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(botaoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(postoLabel)
+                            .addComponent(postosBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(nomeField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cnpjField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(razaoSocialField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bandeiraField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bairroField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipoCombustivelField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dataCombustivelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(precoCombustivelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
 
         pack();
@@ -236,7 +294,7 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     
     
     private void caixasTextoAtivadas(boolean ativada){
-        nomeField.setEditable(ativada);
+        nomeField1.setEditable(ativada);
         cnpjField.setEditable(ativada);
         razaoSocialField.setEditable(ativada);
         bandeiraField.setEditable(ativada);
@@ -246,7 +304,7 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     }
     
     private void limparCaixasTexto(){
-        nomeField.setText("");
+        nomeField1.setText("");
         cnpjField.setText("");
         razaoSocialField.setText("");
         bandeiraField.setText("");
@@ -254,38 +312,72 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         bairroField.setText("");
         cepField.setText("");
     }
-            
-    private void postosBoxPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_postosBoxPopupMenuWillBecomeInvisible
-        
-        //Posto postoSelecionado = (Posto) postosBox.getItemAt(postosBox.getSelectedIndex()); // FIX
-        Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
-        ///*
-        nomeField.setText(postoSelecionado.toString());
+    
+    private void preencherCaixasTexto(Posto postoSelecionado){
+        nomeField1.setText(postoSelecionado.toString());
         cnpjField.setText(postoSelecionado.getCnpj());
         razaoSocialField.setText(postoSelecionado.getRazaoSocial());
         bandeiraField.setText(postoSelecionado.getBandeira());
         enderecoField.setText(postoSelecionado.getEndereco());
         bairroField.setText(postoSelecionado.getBairro());
         cepField.setText(postoSelecionado.getCep());
-        //*/
+    }
+    
+    private void atualizarBox(){
+        postosBox.removeAllItems();
+        for (Posto listaPosto : listaPostos) 
+            postosBox.addItem(listaPosto);
+    }
+    
+    private void atualizarListaCombustiveis(){
+        Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
+        DefaultListModel model1 = new DefaultListModel();
+        
+        listaCombustiveisList.removeAll();
+        for(Combustivel combustivel : postoSelecionado.getCombustiveis())
+            model1.addElement(combustivel);
+        listaCombustiveisList.setModel(model1);
+        
+        this.atualizarCaixasCombustiveis();
+    }
+    
+    private void atualizarCaixasCombustiveis(){
+        Combustivel combustivelSelecionado = (Combustivel) listaCombustiveisList.getSelectedValue();
+        System.out.println(combustivelSelecionado);
+        if(combustivelSelecionado != null){
+            tipoCombustivelField1.setText(combustivelSelecionado.getTipo());
+            dataCombustivelField.setText(combustivelSelecionado.getData().toString());
+            precoCombustivelField.setText(combustivelSelecionado.getPreco() + "");
+        }
+        else{
+            tipoCombustivelField1.setText("");
+            dataCombustivelField.setText("");
+            precoCombustivelField.setText("");
+        }  
+    }
+    
+    private void postosBoxPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_postosBoxPopupMenuWillBecomeInvisible
+        Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
+        this.preencherCaixasTexto(postoSelecionado);
+        this.atualizarListaCombustiveis();
+        
     }//GEN-LAST:event_postosBoxPopupMenuWillBecomeInvisible
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         this.caixasTextoAtivadas(true);
         this.limparCaixasTexto();
-        
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
         botaoSalvar.setEnabled(true);
         postosBox.setEnabled(false);
-        this.caixasTextoAtivadas(true);
+        caixasTextoAtivadas(true);
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
         
-        postoSelecionado.setNome(nomeField.getText());
+        postoSelecionado.setNome(nomeField1.getText());
         postoSelecionado.setCnpj(cnpjField.getText());
         postoSelecionado.setRazaoSocial(razaoSocialField.getText());
         postoSelecionado.setBandeira(bandeiraField.getText());
@@ -295,15 +387,35 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         
         this.caixasTextoAtivadas(false);
         botaoSalvar.setEnabled(false);
-        postosBox.setEnabled(true);
-        
-        
+        postosBox.setEnabled(true);  
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
         Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
         this.listaPostos.remove(postoSelecionado);
+        
+        if(this.listaPostos.size() > 0){
+            this.atualizarBox();
+            postosBox.setSelectedIndex(0);
+            postoSelecionado = (Posto) postosBox.getSelectedItem();
+            System.out.println(postoSelecionado);
+        }
+        else{
+            postoSelecionado = new Posto();
+            listaPostos.add(postoSelecionado);
+            this.atualizarBox();
+        }
+        
+        this.preencherCaixasTexto(postoSelecionado);
+        this.atualizarListaCombustiveis();
     }//GEN-LAST:event_botaoRemoverActionPerformed
+
+    private void listaCombustiveisListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaCombustiveisListMouseClicked
+        Combustivel combustivelSelecionado = (Combustivel) listaCombustiveisList.getSelectedValue();
+        tipoCombustivelField1.setText(combustivelSelecionado.getTipo());
+        dataCombustivelField.setText(combustivelSelecionado.getData().toString());
+        precoCombustivelField.setText(combustivelSelecionado.getPreco() + "");
+    }//GEN-LAST:event_listaCombustiveisListMouseClicked
 
     /**
      * @param args
@@ -383,9 +495,13 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField cepField;
     private javax.swing.JTextField cnpjField;
+    private javax.swing.JTextField dataCombustivelField;
     private javax.swing.JTextField enderecoField;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -393,9 +509,14 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField nomeField;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList listaCombustiveisList;
+    private javax.swing.JTextField nomeField1;
     private javax.swing.JLabel postoLabel;
     private javax.swing.JComboBox postosBox;
+    private javax.swing.JTextField precoCombustivelField;
     private javax.swing.JTextField razaoSocialField;
+    private javax.swing.JTextField tipoCombustivelField1;
     // End of variables declaration//GEN-END:variables
 }

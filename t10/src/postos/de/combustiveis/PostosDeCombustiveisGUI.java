@@ -24,7 +24,7 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         this.listaPostos = listaPostosNova;
         this.atualizarBox();
         this.atualizarListaCombustiveis();
-        this.preencherCaixasTexto((Posto) postosBox.getSelectedItem());
+        this.preencherCaixasTexto();
     }
 
     private PostosDeCombustiveisGUI() {
@@ -71,6 +71,10 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        botaoAdicionarCombustivel = new javax.swing.JButton();
+        botaoRemoverCombustivel = new javax.swing.JButton();
+        botaoEditarCombustivel = new javax.swing.JButton();
+        botaoSalvarCombustivel = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -169,6 +173,35 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
 
         jLabel12.setText("Combustíveis:");
 
+        botaoAdicionarCombustivel.setText("Adicionar");
+        botaoAdicionarCombustivel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAdicionarCombustivelActionPerformed(evt);
+            }
+        });
+
+        botaoRemoverCombustivel.setText("Remover");
+        botaoRemoverCombustivel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoRemoverCombustivelActionPerformed(evt);
+            }
+        });
+
+        botaoEditarCombustivel.setText("Editar");
+        botaoEditarCombustivel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEditarCombustivelActionPerformed(evt);
+            }
+        });
+
+        botaoSalvarCombustivel.setText("Salvar");
+        botaoSalvarCombustivel.setEnabled(false);
+        botaoSalvarCombustivel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarCombustivelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,59 +210,60 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(postoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(postosBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cnpjField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(razaoSocialField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bandeiraField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bairroField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nomeField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(postoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(jLabel12)
-                                .addGap(93, 93, 93))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jLabel11)
-                                        .addComponent(tipoCombustivelField1)
-                                        .addComponent(dataCombustivelField)
-                                        .addComponent(precoCombustivelField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addComponent(postosBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cnpjField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(razaoSocialField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bandeiraField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(enderecoField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bairroField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nomeField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botaoAdicionarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoRemoverCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel12)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel10)
+                        .addComponent(jLabel9)
+                        .addComponent(jLabel11)
+                        .addComponent(tipoCombustivelField1)
+                        .addComponent(dataCombustivelField)
+                        .addComponent(precoCombustivelField, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botaoEditarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoSalvarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(postoLabel)
@@ -261,20 +295,12 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cepField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel8)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tipoCombustivelField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,14 +312,32 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(precoCombustivelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botaoRemoverCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoAdicionarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botaoSalvarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoEditarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
     
-    private void caixasTextoAtivadas(boolean ativada){
+    private void caixasTextoPostoAtivadas(boolean ativada){
         nomeField1.setEditable(ativada);
         cnpjField.setEditable(ativada);
         razaoSocialField.setEditable(ativada);
@@ -303,7 +347,13 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         cepField.setEditable(ativada);
     }
     
-    private void limparCaixasTexto(){
+    private void caixasTextoCombustivelAtivadas(boolean ativada){
+        tipoCombustivelField1.setEditable(ativada);
+        dataCombustivelField.setEditable(ativada);
+        precoCombustivelField.setEditable(ativada);
+    }
+    
+    private void limparTodasCaixasTexto(){
         nomeField1.setText("");
         cnpjField.setText("");
         razaoSocialField.setText("");
@@ -311,16 +361,28 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         enderecoField.setText("");
         bairroField.setText("");
         cepField.setText("");
+        
+        tipoCombustivelField1.setText("");
+        dataCombustivelField.setText("");
+        precoCombustivelField.setText("");
+        
+        listaCombustiveisList.removeAll();
+        this.atualizarListaCombustiveis();
     }
     
-    private void preencherCaixasTexto(Posto postoSelecionado){
-        nomeField1.setText(postoSelecionado.toString());
-        cnpjField.setText(postoSelecionado.getCnpj());
-        razaoSocialField.setText(postoSelecionado.getRazaoSocial());
-        bandeiraField.setText(postoSelecionado.getBandeira());
-        enderecoField.setText(postoSelecionado.getEndereco());
-        bairroField.setText(postoSelecionado.getBairro());
-        cepField.setText(postoSelecionado.getCep());
+    private void preencherCaixasTexto(){
+        Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
+        if(postoSelecionado != null){
+            nomeField1.setText(postoSelecionado.toString());
+            cnpjField.setText(postoSelecionado.getCnpj());
+            razaoSocialField.setText(postoSelecionado.getRazaoSocial());
+            bandeiraField.setText(postoSelecionado.getBandeira());
+            enderecoField.setText(postoSelecionado.getEndereco());
+            bairroField.setText(postoSelecionado.getBairro());
+            cepField.setText(postoSelecionado.getCep());
+        }
+        else 
+            this.limparTodasCaixasTexto();
     }
     
     private void atualizarBox(){
@@ -331,19 +393,23 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     
     private void atualizarListaCombustiveis(){
         Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
-        DefaultListModel model1 = new DefaultListModel();
         
-        listaCombustiveisList.removeAll();
-        for(Combustivel combustivel : postoSelecionado.getCombustiveis())
-            model1.addElement(combustivel);
-        listaCombustiveisList.setModel(model1);
-        
-        this.atualizarCaixasCombustiveis();
+        if(postoSelecionado != null){
+            DefaultListModel model1 = new DefaultListModel();
+
+            listaCombustiveisList.removeAll();
+            for(Combustivel combustivel : postoSelecionado.getCombustiveis())
+                model1.addElement(combustivel);
+            listaCombustiveisList.setModel(model1);
+
+            this.atualizarCaixasCombustiveis();
+        }
+        else
+            listaCombustiveisList.removeAll();
     }
     
     private void atualizarCaixasCombustiveis(){
         Combustivel combustivelSelecionado = (Combustivel) listaCombustiveisList.getSelectedValue();
-        System.out.println(combustivelSelecionado);
         if(combustivelSelecionado != null){
             tipoCombustivelField1.setText(combustivelSelecionado.getTipo());
             dataCombustivelField.setText(combustivelSelecionado.getData().toString());
@@ -357,21 +423,28 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     }
     
     private void postosBoxPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_postosBoxPopupMenuWillBecomeInvisible
-        Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
-        this.preencherCaixasTexto(postoSelecionado);
+        this.preencherCaixasTexto();
         this.atualizarListaCombustiveis();
-        
     }//GEN-LAST:event_postosBoxPopupMenuWillBecomeInvisible
 
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
-        this.caixasTextoAtivadas(true);
-        this.limparCaixasTexto();
+        this.caixasTextoPostoAtivadas(true);
+        this.limparTodasCaixasTexto();
+        
+        Posto novoPosto = new Posto();
+        listaPostos.add(novoPosto);
+        this.atualizarBox();
+        postosBox.setSelectedItem(novoPosto);
+        this.atualizarListaCombustiveis();
+        
+        botaoSalvar.setEnabled(true);
+        postosBox.setEnabled(false);
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
         botaoSalvar.setEnabled(true);
         postosBox.setEnabled(false);
-        caixasTextoAtivadas(true);
+        caixasTextoPostoAtivadas(true);
     }//GEN-LAST:event_botaoEditarActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
@@ -385,37 +458,63 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         postoSelecionado.setBairro(bairroField.getText());
         postoSelecionado.setCep(cepField.getText());
         
-        this.caixasTextoAtivadas(false);
+        this.caixasTextoPostoAtivadas(false);
         botaoSalvar.setEnabled(false);
-        postosBox.setEnabled(true);  
+        postosBox.setEnabled(true);
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
         Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
         this.listaPostos.remove(postoSelecionado);
+        this.atualizarBox();
         
         if(this.listaPostos.size() > 0){
             this.atualizarBox();
             postosBox.setSelectedIndex(0);
-            postoSelecionado = (Posto) postosBox.getSelectedItem();
-            System.out.println(postoSelecionado);
-        }
-        else{
-            postoSelecionado = new Posto();
-            listaPostos.add(postoSelecionado);
-            this.atualizarBox();
         }
         
-        this.preencherCaixasTexto(postoSelecionado);
+        this.preencherCaixasTexto();
         this.atualizarListaCombustiveis();
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void listaCombustiveisListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaCombustiveisListMouseClicked
         Combustivel combustivelSelecionado = (Combustivel) listaCombustiveisList.getSelectedValue();
-        tipoCombustivelField1.setText(combustivelSelecionado.getTipo());
-        dataCombustivelField.setText(combustivelSelecionado.getData().toString());
-        precoCombustivelField.setText(combustivelSelecionado.getPreco() + "");
+        if(combustivelSelecionado != null){
+            tipoCombustivelField1.setText(combustivelSelecionado.getTipo());
+            dataCombustivelField.setText(combustivelSelecionado.getData().toString());
+            precoCombustivelField.setText(combustivelSelecionado.getPreco() + "");
+        }
     }//GEN-LAST:event_listaCombustiveisListMouseClicked
+
+    private void botaoAdicionarCombustivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarCombustivelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoAdicionarCombustivelActionPerformed
+
+    private void botaoRemoverCombustivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverCombustivelActionPerformed
+        listaCombustiveisList.removeAll();
+    }//GEN-LAST:event_botaoRemoverCombustivelActionPerformed
+
+    private void botaoEditarCombustivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarCombustivelActionPerformed
+        botaoSalvarCombustivel.setEnabled(true);
+        postosBox.setEnabled(false);
+        this.listaCombustiveisList.setEnabled(false);
+        this.caixasTextoCombustivelAtivadas(true);
+        
+    }//GEN-LAST:event_botaoEditarCombustivelActionPerformed
+
+    private void botaoSalvarCombustivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarCombustivelActionPerformed
+        Combustivel combustivelSelecionado = (Combustivel) listaCombustiveisList.getSelectedValue();
+        
+        combustivelSelecionado.setTipo(tipoCombustivelField1.getText());
+        combustivelSelecionado.setData(new Data(27,11,2015));
+        //combustivelSelecionado.setData(dataCombustivelField.getText());
+        combustivelSelecionado.setPreco(Float.parseFloat(precoCombustivelField.getText()));
+        
+        this.caixasTextoCombustivelAtivadas(false);
+        botaoSalvarCombustivel.setEnabled(false);
+        postosBox.setEnabled(true);
+        listaCombustiveisList.setEnabled(true);
+    }//GEN-LAST:event_botaoSalvarCombustivelActionPerformed
 
     /**
      * @param args
@@ -490,9 +589,13 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     private javax.swing.JTextField bairroField;
     private javax.swing.JTextField bandeiraField;
     private javax.swing.JButton botaoAdicionar;
+    private javax.swing.JButton botaoAdicionarCombustivel;
     private javax.swing.JButton botaoEditar;
+    private javax.swing.JButton botaoEditarCombustivel;
     private javax.swing.JButton botaoRemover;
+    private javax.swing.JButton botaoRemoverCombustivel;
     private javax.swing.JButton botaoSalvar;
+    private javax.swing.JButton botaoSalvarCombustivel;
     private javax.swing.JTextField cepField;
     private javax.swing.JTextField cnpjField;
     private javax.swing.JTextField dataCombustivelField;

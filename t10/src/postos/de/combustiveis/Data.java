@@ -25,6 +25,22 @@ public class Data {
         this.ano = novoAno;
     }
     
+    public void setDia(int dia){
+        this.dia = dia;
+    }
+    
+    public void setMes(int mes){
+        this.mes = mes;
+    }
+    
+    public void setAno(int ano){
+        this.ano = ano;
+    }
+    
+    public void setDataComString(String dataNova){
+        
+    }
+    
     public void showData(){
         System.out.printf("%d/%d/%d\n", this.dia, this.mes, this.ano);
     }

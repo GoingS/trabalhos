@@ -16,7 +16,10 @@ public class Data {
     
     @Override
     public String toString(){
-        return "" + this.dia + '/' + this.mes + '/' + this.ano;
+        if(this.dia == 0 && this.mes == 0 && this.ano == 0)
+            return "";
+        else
+            return "" + this.dia + '/' + this.mes + '/' + this.ano;
     }
     
     public Data(int novoDia, int novoMes, int novoAno){

@@ -9,6 +9,12 @@ public class Combustivel {
     private Data dataColetaPreco;
     private float preco;
     
+    public Combustivel(){
+        this.tipo = "";
+        this.dataColetaPreco = new Data(0,0,0);
+        this.preco = 0f;
+    }
+    
     
     public Combustivel(String novoTipo, Data novaData, float novoPreco){
         this.tipo = novoTipo;

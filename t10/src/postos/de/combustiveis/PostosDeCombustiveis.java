@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author GoingS
  */
 public class PostosDeCombustiveis {
-    /*
+    
     public ArrayList<Posto> getPostosPorBairro(ArrayList<Posto> listaPostos, String bairroProcurado){
         ArrayList<Posto> postosDoBairro = new ArrayList<>(); 
         
@@ -21,7 +21,7 @@ public class PostosDeCombustiveis {
             
         return postosDoBairro;
     }
-    */
+    
     public static void mainxd(String[] args) {
         ArrayList<Posto> listaPostos = new ArrayList<>();
         //ArrayList<Posto> postosPorBairro = new ArrayList<>();

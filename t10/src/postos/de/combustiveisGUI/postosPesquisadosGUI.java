@@ -1,8 +1,9 @@
-package postos.de.combustiveis;
+package postos.de.combustiveisGUI;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import postos.de.combustiveis.Posto;
 
 /**
  *
@@ -63,7 +64,7 @@ public class postosPesquisadosGUI extends javax.swing.JFrame {
         listaPostosPesquisados = new javax.swing.JList();
         botaoOkPostosPesquisados = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         postoPesquisadoField.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -75,7 +76,7 @@ public class postosPesquisadosGUI extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(listaPostosPesquisados);
 
-        botaoOkPostosPesquisados.setText("Ok");
+        botaoOkPostosPesquisados.setText("Fechar");
         botaoOkPostosPesquisados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoOkPostosPesquisadosActionPerformed(evt);
@@ -148,47 +149,12 @@ public class postosPesquisadosGUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(postosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-           
-        ArrayList<Posto> listaPostos = new ArrayList<>();
-        
-        Combustivel c1 = new Combustivel("Etanol", new Data(20,11,2015), 2.12f);
-        Combustivel c2 = new Combustivel("Diesel", new Data(20,11,2015), 3.12f);
-        Combustivel c3 = new Combustivel("Gasolina", new Data(20,11,2015), 3.59f);
-        
-        Posto p1 = new Posto();
-        p1.setBairro("Centro");
-        p1.setBandeira("BR");
-        p1.setCep("97010040");
-        p1.setCnpj("12345678/0001-02");
-        p1.setEndereco("Rua dos Andradas, 1235");
-        p1.setNome("Meu Posto");
-        p1.setRazaoSocial("Razao");
-        
-        System.out.println(p1.toString());
-        
-        Posto p2 = new Posto();
-        p2.setBairro("ASDSAD");
-        p2.setBandeira("BR");
-        p2.setCep("SD");
-        p2.setCnpj("gGGGG/fefe-02");
-        p2.setEndereco("Rua dos Andradas, 448949");
-        p2.setNome("Postão");
-        p2.setRazaoSocial("grgr");
-        
-        //c1.showCombustivel();
-        p1.addCombustivel(c1);
-        p1.addCombustivel(c2);
-        p1.addCombustivel(c3);
-        p1.rmvCombustivel("Etanol");
-        
-        listaPostos.add(p1);
-        listaPostos.add(p2);
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new postosPesquisadosGUI(listaPostos).setVisible(true);
+                new postosPesquisadosGUI().setVisible(true);
             }
         });
     }

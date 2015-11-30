@@ -14,7 +14,13 @@ public class Data {
     private int mes;
     private int ano;
     
-    @Override
+    public Data(int novoDia, int novoMes, int novoAno){
+        this.dia = novoDia;
+        this.mes = novoMes;
+        this.ano = novoAno;
+    }
+    
+     @Override
     public String toString(){
         if(this.dia == 0 && this.mes == 0 && this.ano == 0)
             return "";
@@ -22,10 +28,22 @@ public class Data {
             return "" + this.dia + '/' + this.mes + '/' + this.ano;
     }
     
-    public Data(int novoDia, int novoMes, int novoAno){
-        this.dia = novoDia;
-        this.mes = novoMes;
-        this.ano = novoAno;
+    public static Data stringToData(String dataEmString){
+        int diaNovo, mesNovo, anoNovo;
+        String[] valores = dataEmString.split("/");
+        
+        if(valores.length == 3){
+            diaNovo = Integer.parseInt(valores[0]);
+            mesNovo = Integer.parseInt(valores[1]);
+            anoNovo = Integer.parseInt(valores[2]);
+        }
+        else{
+            diaNovo = 0;
+            mesNovo = 0;
+            anoNovo = 0;
+        }
+        
+        return new Data(diaNovo,mesNovo,anoNovo);
     }
     
     public void setDia(int dia){

@@ -1,13 +1,18 @@
-package postos.de.combustiveis;
+package postos.de.combustiveisGUI;
 
+import postos.de.combustiveisGUI.postosPesquisadosGUI;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
+import postos.de.combustiveis.Combustivel;
+import postos.de.combustiveis.Data;
+import postos.de.combustiveis.Historico;
+import postos.de.combustiveis.Posto;
 
 /**
  *
  * @author GoingS
  */
+
 public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
 
     /**
@@ -76,8 +81,11 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         botaoRemoverCombustivel = new javax.swing.JButton();
         botaoEditarCombustivel = new javax.swing.JButton();
         botaoSalvarCombustivel = new javax.swing.JButton();
-        botaoHistoricoPrecos = new javax.swing.JButton();
         botaoPesquisarPostos = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaHistoricoPrecos = new javax.swing.JList();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -205,19 +213,18 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
             }
         });
 
-        botaoHistoricoPrecos.setText("Ver histórico de preços");
-        botaoHistoricoPrecos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoHistoricoPrecosActionPerformed(evt);
-            }
-        });
-
         botaoPesquisarPostos.setText("Pesquisar postos por bairro");
         botaoPesquisarPostos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoPesquisarPostosActionPerformed(evt);
             }
         });
+
+        jLabel13.setText("Imagem:");
+
+        jLabel14.setText("Histórico de preços:");
+
+        jScrollPane2.setViewportView(listaHistoricoPrecos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -254,29 +261,35 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel13))
                 .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(botaoPesquisarPostos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(precoCombustivelField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(dataCombustivelField, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(tipoCombustivelField1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(botaoAdicionarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoRemoverCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(botaoEditarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoSalvarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(botaoHistoricoPrecos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoPesquisarPostos)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(precoCombustivelField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(dataCombustivelField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tipoCombustivelField1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(botaoAdicionarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(botaoRemoverCombustivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(botaoEditarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(botaoSalvarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,28 +347,37 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(precoCombustivelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(botaoRemoverCombustivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoAdicionarCombustivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel13)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoSalvarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoEditarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botaoHistoricoPrecos)))
+                            .addComponent(botaoSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(botaoRemoverCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botaoAdicionarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(botaoSalvarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botaoEditarCombustivel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addComponent(botaoPesquisarPostos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                        .addComponent(jLabel14)
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoPesquisarPostos, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -420,13 +442,26 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         Posto postoSelecionado = (Posto) postosBox.getSelectedItem();
         DefaultListModel model1 = new DefaultListModel();
         
-        if(postoSelecionado != null){
+        if(postoSelecionado != null)
             for(Combustivel combustivel : postoSelecionado.getCombustiveis())
                 model1.addElement(combustivel);
-        }
+        
         
         listaCombustiveisList.setModel(model1);
         this.atualizarCaixasCombustiveis();
+        this.atualizarListaHistorico();
+    }
+    
+    private void atualizarListaHistorico(){
+        Combustivel combustivelSelecionado = (Combustivel) listaCombustiveisList.getSelectedValue();
+        DefaultListModel model1 = new DefaultListModel();
+        
+        if(combustivelSelecionado != null)
+            for(Historico historico : combustivelSelecionado.getHistorico())
+                model1.addElement(historico);
+        
+        listaHistoricoPrecos.setModel(model1);
+        
     }
     
     private void atualizarCaixasCombustiveis(){
@@ -443,18 +478,6 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         }  
     }
     
-    private ArrayList<Posto> getPostosPorBairro(ArrayList<Posto> listaPostos, String bairroProcurado){
-        ArrayList<Posto> postosDoBairro = new ArrayList<>(); 
-        
-        for (Posto listaPosto : listaPostos) {
-            if (listaPosto.getBairro().equals(bairroProcurado)) {
-                postosDoBairro.add(listaPosto);
-            }
-        }
-            
-        return postosDoBairro;
-    }
-    
     
     private void postosBoxPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_postosBoxPopupMenuWillBecomeInvisible
         this.preencherCaixasTexto();
@@ -464,15 +487,14 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     private void botaoAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAdicionarActionPerformed
         this.caixasTextoPostoAtivadas(true);
         this.limparTodasCaixasTexto();
+        botaoSalvar.setEnabled(true);
+        postosBox.setEnabled(false);
         
         Posto novoPosto = new Posto();
         listaPostos.add(novoPosto);
         this.atualizarBox();
         postosBox.setSelectedItem(novoPosto);
         this.atualizarListaCombustiveis();
-        
-        botaoSalvar.setEnabled(true);
-        postosBox.setEnabled(false);
     }//GEN-LAST:event_botaoAdicionarActionPerformed
 
     private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
@@ -519,6 +541,7 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
             tipoCombustivelField1.setText(combustivelSelecionado.getTipo());
             dataCombustivelField.setText(combustivelSelecionado.getData().toString());
             precoCombustivelField.setText(combustivelSelecionado.getPreco() + "");
+            this.atualizarListaHistorico();
         }
     }//GEN-LAST:event_listaCombustiveisListMouseClicked
 
@@ -547,30 +570,28 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         botaoSalvarCombustivel.setEnabled(true);
         postosBox.setEnabled(false);
         this.caixasTextoCombustivelAtivadas(true);
-        this.listaCombustiveisList.setEnabled(false);
-        
-        
+        this.listaCombustiveisList.setEnabled(false);  
     }//GEN-LAST:event_botaoEditarCombustivelActionPerformed
 
     private void botaoSalvarCombustivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarCombustivelActionPerformed
         Combustivel combustivelSelecionado = (Combustivel) listaCombustiveisList.getSelectedValue();
         
         combustivelSelecionado.setTipo(tipoCombustivelField1.getText());
-        combustivelSelecionado.setData(new Data(27,11,2015));
-        //combustivelSelecionado.setData(dataCombustivelField.getText());
-        combustivelSelecionado.setPreco(Float.parseFloat(precoCombustivelField.getText()));
-        
-        
+        if(combustivelSelecionado.getHistorico().size() > 0)
+            combustivelSelecionado.alterarPreco(Float.parseFloat(precoCombustivelField.getText()),
+                 Data.stringToData(dataCombustivelField.getText()));
+        else{
+            combustivelSelecionado.setPreco(Float.parseFloat(precoCombustivelField.getText()));
+            combustivelSelecionado.setData(Data.stringToData(dataCombustivelField.getText()));
+        }
+ 
         this.caixasTextoCombustivelAtivadas(false);
         botaoSalvarCombustivel.setEnabled(false);
         postosBox.setEnabled(true);
         listaCombustiveisList.setEnabled(true);
         this.atualizarCaixasCombustiveis();
+        this.atualizarListaHistorico();
     }//GEN-LAST:event_botaoSalvarCombustivelActionPerformed
-
-    private void botaoHistoricoPrecosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoHistoricoPrecosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoHistoricoPrecosActionPerformed
 
     private void botaoPesquisarPostosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarPostosActionPerformed
         postosPesquisadosGUI postosPesquisados = new postosPesquisadosGUI(this.listaPostos);
@@ -609,7 +630,6 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
         Combustivel c1 = new Combustivel("Etanol", new Data(20,11,2015), 2.12f);
         Combustivel c2 = new Combustivel("Diesel", new Data(20,11,2015), 3.12f);
         Combustivel c3 = new Combustivel("Gasolina", new Data(20,11,2015), 3.59f);
-        
         Posto p1 = new Posto();
         p1.setBairro("Centro");
         p1.setBandeira("BR");
@@ -654,7 +674,6 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     private javax.swing.JButton botaoAdicionarCombustivel;
     private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoEditarCombustivel;
-    private javax.swing.JButton botaoHistoricoPrecos;
     private javax.swing.JButton botaoPesquisarPostos;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaoRemoverCombustivel;
@@ -669,6 +688,8 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -678,7 +699,9 @@ public class PostosDeCombustiveisGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList listaCombustiveisList;
+    private javax.swing.JList listaHistoricoPrecos;
     private javax.swing.JTextField nomeField1;
     private javax.swing.JLabel postoLabel;
     private javax.swing.JComboBox postosBox;

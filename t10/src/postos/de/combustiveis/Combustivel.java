@@ -13,7 +13,7 @@ public class Combustivel {
     private ArrayList<Historico> historicoDePrecos;
     
     public Combustivel(){
-        this.tipo = "";
+        this.tipo = " ";
         this.dataColetaPreco = new Data(0,0,0);
         this.preco = 0f;
         this.historicoDePrecos = new ArrayList<Historico>();
@@ -32,7 +32,7 @@ public class Combustivel {
         return this.tipo;
     }
     
-    public void alterarPreco(float novoPreco, Data novaData){
+    public void alterarPrecoComHistorico(float novoPreco, Data novaData){
         this.historicoDePrecos.add(new Historico(this.preco, this.dataColetaPreco));
         this.preco = novoPreco;
         this.dataColetaPreco = novaData;

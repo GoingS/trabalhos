@@ -14,6 +14,7 @@ public class Posto {
     private String endereco;
     private String bairro;
     private String cep;
+    private String imagem;
     private ArrayList<Combustivel> combustiveis;
     
     public Posto(){
@@ -24,6 +25,7 @@ public class Posto {
         endereco = "";
         bairro = "";
         cep = "";
+        imagem = "";
         combustiveis = new ArrayList<>();
     }
     
@@ -39,10 +41,6 @@ public class Posto {
         System.out.println("- Tipos de combustiveis:");
         for(int i=0; i<this.combustiveis.size(); i++)
             System.out.println(combustiveis.get(i).getTipo());
-    }
-    
-    public ArrayList<Combustivel> getCombustiveis(){
-        return this.combustiveis;
     }
     
     @Override
@@ -77,7 +75,13 @@ public class Posto {
         return this.cep;
     }
     
+    public String getImagem(){
+        return this.imagem;
+    }
     
+    public ArrayList<Combustivel> getCombustiveis(){
+        return this.combustiveis;
+    }
     
     
     public void setCnpj(String novoCnpj){
@@ -106,6 +110,10 @@ public class Posto {
     
     public void setCep(String novoCep){
         this.cep = novoCep;
+    }
+    
+    public void setImagem(String novaImagem){
+        this.imagem = novaImagem;
     }
     
     public void addCombustivel(Combustivel novoCombustivel){

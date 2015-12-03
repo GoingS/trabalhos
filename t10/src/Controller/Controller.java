@@ -1,9 +1,15 @@
 package Controller;
 
+
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -17,8 +23,8 @@ import postos.de.combustiveisGUI.PostosPesquisadosGUI;
 public class Controller {
     
     private static PostosDeCombustiveisGUI gui;
-    private static final int alturaImagem = 227;
-    private static final int larguraImagem = 140;
+    private static final int alturaImagem = 140;
+    private static final int larguraImagem = 260;
     
     
     public static void limparTodasCaixasTexto(){
@@ -74,7 +80,7 @@ public class Controller {
     }
     
     public static void atualizarBox(){
-        //gui.postosBox.removeAllItems();
+        gui.postosBox.removeAllItems();
         for (Posto listaPosto : gui.listaPostos)
             gui.postosBox.addItem(listaPosto);
     }
@@ -171,17 +177,17 @@ public class Controller {
     public static void botaoRemoverEvento(){
         Posto postoSelecionado = (Posto) gui.postosBox.getSelectedItem();
         
-        gui.listaPostos.remove(postoSelecionado);
-        atualizarBox();
-        
-        if(gui.listaPostos.size() > 0)
-            gui.postosBox.setSelectedIndex(0);
-        else
-            gui.postosBox.setSelectedItem(null);
-        
-        
-        preencherCaixasTexto();
-        atualizarListaCombustiveis();
+        if(postoSelecionado != null){
+            gui.listaPostos.remove(postoSelecionado);
+            atualizarBox();
+
+            if(gui.listaPostos.size() > 0)
+                gui.postosBox.setSelectedIndex(0);
+            else
+                gui.postosBox.setSelectedItem(null);
+            preencherCaixasTexto();
+            atualizarListaCombustiveis();
+        }
     }
     
     public static void listaCombustiveisEvento(){
@@ -195,32 +201,40 @@ public class Controller {
     }
     
     public static void botaoAdicionarCombustivelEvento(){
-        Posto PostoSelecionado = (Posto) gui.postosBox.getSelectedItem();
-        Combustivel novoCombustivel = new Combustivel();
-        
-        
-        PostoSelecionado.getCombustiveis().add(novoCombustivel);
-        atualizarListaCombustiveis();
-        gui.listaCombustiveisList.setSelectedValue(novoCombustivel, false);
-        
-        gui.botaoSalvarCombustivel.setEnabled(true);
-        gui.postosBox.setEnabled(false);
-        caixasTextoCombustivelAtivadas(true);
+        Posto postoSelecionado = (Posto) gui.postosBox.getSelectedItem();
+        if(postoSelecionado != null){
+            Combustivel novoCombustivel = new Combustivel();
+
+
+            postoSelecionado.getCombustiveis().add(novoCombustivel);
+            atualizarListaCombustiveis();
+            gui.listaCombustiveisList.setSelectedValue(novoCombustivel, false);
+
+            gui.botaoSalvarCombustivel.setEnabled(true);
+            gui.postosBox.setEnabled(false);
+            caixasTextoCombustivelAtivadas(true);
+        }
     }
     
     public static void botaoRemoverCombustivelEvento(){
         Posto postoSelecionado = (Posto) gui.postosBox.getSelectedItem();
-        Combustivel combustivelSelecionado = (Combustivel) gui.listaCombustiveisList.getSelectedValue();
-        
-        postoSelecionado.getCombustiveis().remove(combustivelSelecionado);
-        atualizarListaCombustiveis();
+        if(postoSelecionado != null){
+            Combustivel combustivelSelecionado = (Combustivel) gui.listaCombustiveisList.getSelectedValue();
+
+            postoSelecionado.getCombustiveis().remove(combustivelSelecionado);
+            atualizarListaCombustiveis();
+        }
     }
     
     public static void botaoEditarCombustivelEvento(){
-        gui.botaoSalvarCombustivel.setEnabled(true);
-        gui.postosBox.setEnabled(false);
-        gui.listaCombustiveisList.setEnabled(false);
-        caixasTextoCombustivelAtivadas(true);
+        Combustivel combustivelSelecionado = (Combustivel) gui.listaCombustiveisList.getSelectedValue();
+        
+        if(combustivelSelecionado != null){
+            gui.botaoSalvarCombustivel.setEnabled(true);
+            gui.postosBox.setEnabled(false);
+            gui.listaCombustiveisList.setEnabled(false);
+            caixasTextoCombustivelAtivadas(true);
+        }
     }
     
     public static void botaoSalvarCombustivelEvento(){
@@ -258,17 +272,51 @@ public class Controller {
             File f = fc.getSelectedFile();
             String localArquivo = f.getAbsolutePath();
             Posto postoSelecionado = (Posto) gui.postosBox.getSelectedItem();
-            
             postoSelecionado.setImagem(localArquivo);
             gui.labelImagem.setIcon(redimensionarEConverter(localArquivo));
         }
     }
     
-    public static void main(String[] Args){
+    public static void main(String[] Args) throws FileNotFoundException, IOException{
         ArrayList<Posto> listaPostosR = new ArrayList<>();
         
+        Posto postoAdicionado;
+        String csvFile = "C:\\Users\\GoingS\\Desktop\\postos.csv";
+        BufferedReader br;
+        String linha;
+        
+        
+        
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+            
+            while((linha = br.readLine()) != null){
+                String[] valores = linha.split(",");
+                postoAdicionado = new Posto();
+                
+                postoAdicionado.setNome(valores[0]);
+                postoAdicionado.setBairro(valores[1]);
+                postoAdicionado.setBandeira(valores[2]);
+                postoAdicionado.setCep(valores[3]);
+                postoAdicionado.setCnpj(valores[4]);
+                postoAdicionado.setEndereco(valores[5]);
+                postoAdicionado.setRazaoSocial(valores[6]);
+                
+                listaPostosR.add(postoAdicionado);
+            } 
+        } catch (FileNotFoundException e) {
+        }
+        catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+        
                        
-        Combustivel c1 = new Combustivel("Etanol", new Data(20,11,2015), 2.12f);
+        /*Combustivel c1 = new Combustivel("Etanol", new Data(20,11,2015), 2.12f);
         Combustivel c2 = new Combustivel("Diesel", new Data(20,11,2015), 3.12f);
         Combustivel c3 = new Combustivel("Gasolina", new Data(20,11,2015), 3.59f);
         
@@ -298,7 +346,7 @@ public class Controller {
         p1.rmvCombustivel("Etanol");
         
         listaPostosR.add(p1);
-        listaPostosR.add(p2);
+        listaPostosR.add(p2);*/
         
         gui = new PostosDeCombustiveisGUI(listaPostosR);
         gui.setVisible(true);

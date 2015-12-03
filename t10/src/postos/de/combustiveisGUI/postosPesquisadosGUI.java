@@ -2,14 +2,13 @@ package postos.de.combustiveisGUI;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 import postos.de.combustiveis.Posto;
 
 /**
  *
  * @author GoingS
  */
-public class postosPesquisadosGUI extends javax.swing.JFrame {
+public class PostosPesquisadosGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form postosPesquisadosGUI
@@ -18,12 +17,12 @@ public class postosPesquisadosGUI extends javax.swing.JFrame {
     
     private ArrayList<Posto> listaPostos;
     
-    public postosPesquisadosGUI(ArrayList<Posto> novaListaPostos) {
+    public PostosPesquisadosGUI(ArrayList<Posto> novaListaPostos) {
         initComponents();
         this.listaPostos = novaListaPostos;
     }
 
-    private postosPesquisadosGUI() {
+    private PostosPesquisadosGUI() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
@@ -140,21 +139,22 @@ public class postosPesquisadosGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(postosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(postosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(postosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(postosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new postosPesquisadosGUI().setVisible(true);
+                new PostosPesquisadosGUI().setVisible(true);
             }
         });
     }

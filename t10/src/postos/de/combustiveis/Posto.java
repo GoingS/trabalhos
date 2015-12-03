@@ -25,7 +25,7 @@ public class Posto {
         endereco = "";
         bairro = "";
         cep = "";
-        imagem = "";
+        imagem = System.getProperty("user.dir") + "\\src\\imagens\\SemImagem.png";
         combustiveis = new ArrayList<>();
     }
     

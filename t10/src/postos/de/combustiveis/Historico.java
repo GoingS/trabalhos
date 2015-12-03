@@ -14,6 +14,11 @@ public class Historico {
         this.dataDeAlteracao = novaData;
     }
     
+    public Historico(){
+        this.preco = 0;
+        this.dataDeAlteracao = new Data(0,0,0);
+    }
+    
     @Override
     public String toString(){
         return this.dataDeAlteracao.toString() + " - " + this.preco;

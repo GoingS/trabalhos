@@ -8,7 +8,7 @@ import postos.de.combustiveis.Posto;
  *
  * @author GoingS
  */
-public class PostosPesquisadosGUI extends javax.swing.JFrame {
+public class PostosPesquisadosGUIold extends javax.swing.JFrame {
 
     /**
      * Creates new form postosPesquisadosGUI
@@ -17,18 +17,17 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
     
     private ArrayList<Posto> listaPostos;
     
-    public PostosPesquisadosGUI(ArrayList<Posto> novaListaPostos) {
+    public PostosPesquisadosGUIold(ArrayList<Posto> novaListaPostos) {
         initComponents();
         this.listaPostos = novaListaPostos;
     }
 
-    private PostosPesquisadosGUI() {
+    private PostosPesquisadosGUIold() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    private void atualizarListaPostosPesquisados(){
+    private void atualizarListaPostos(){
         DefaultListModel model1 = new DefaultListModel();
-        
         
         for(Posto posto : this.buscarPostosPorBairro(listaPostos, postoPesquisadoField.getText()))
             model1.addElement(posto);
@@ -39,9 +38,10 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
     private ArrayList<Posto> buscarPostosPorBairro(ArrayList<Posto> listaPostos, String bairroProcurado){
         ArrayList<Posto> postosDoBairro = new ArrayList<>(); 
         
-        for (Posto listaPosto : listaPostos){
-            if (listaPosto.getBairro().equals(bairroProcurado))
+        for (Posto listaPosto : listaPostos) {
+            if (listaPosto.getBairro().equals(bairroProcurado)) {
                 postosDoBairro.add(listaPosto);
+            }
         }
             
         return postosDoBairro;
@@ -71,7 +71,7 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Digite o bairro:");
+        jLabel1.setText("Digite o posto");
 
         jScrollPane1.setViewportView(listaPostosPesquisados);
 
@@ -115,7 +115,7 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void postoPesquisadoFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_postoPesquisadoFieldCaretUpdate
-        this.atualizarListaPostosPesquisados();
+        this.atualizarListaPostos();
     }//GEN-LAST:event_postoPesquisadoFieldCaretUpdate
 
     private void botaoOkPostosPesquisadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOkPostosPesquisadosActionPerformed
@@ -139,18 +139,14 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PostosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostosPesquisadosGUIold.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PostosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostosPesquisadosGUIold.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PostosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostosPesquisadosGUIold.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PostosPesquisadosGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostosPesquisadosGUIold.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -160,7 +156,7 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new PostosPesquisadosGUI().setVisible(true);
+                new PostosPesquisadosGUIold().setVisible(true);
             }
         });
     }

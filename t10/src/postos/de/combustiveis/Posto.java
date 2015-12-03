@@ -47,6 +47,8 @@ public class Posto {
     public String toString(){
         return this.nomeFantasia;
     }
+    
+    
     public String getCnpj(){
         return this.cnpj;
     }
@@ -125,7 +127,14 @@ public class Posto {
             if(combustiveis.get(i).getTipo().equals(tipoRemovido))
                 combustiveis.remove(i);
         }
-        
+    }
+    
+    public static Posto buscarPosto(ArrayList<Posto> listaPostos, String nomeProcurado){
+        for(Posto posto : listaPostos){
+            if(posto.nomeFantasia.equals(nomeProcurado))
+                return posto;
+        }
+        return null;
     }
     
 }

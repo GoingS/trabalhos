@@ -23,11 +23,11 @@ import postos.de.combustiveisGUI.PostosPesquisadosGUI;
 public class Controller {
     
     private static PostosDeCombustiveisGUI gui;
-    private static final int alturaImagem = 140;
-    private static final int larguraImagem = 260;
+    private static final int alturaImagem = 152;
+    private static final int larguraImagem = 275;
     
     
-    public static void limparTodasCaixasTexto(){
+    private static void limparTodasCaixasTexto(){
         gui.nomeField.setText("");
         gui.cnpjField.setText("");
         gui.razaoSocialField.setText("");
@@ -45,7 +45,7 @@ public class Controller {
         atualizarListaCombustiveis();
     }
     
-    public static void caixasTextoPostoAtivadas(boolean ativada){
+    private static void caixasTextoPostoAtivadas(boolean ativada){
         gui.nomeField.setEditable(ativada);
         gui.cnpjField.setEditable(ativada);
         gui.razaoSocialField.setEditable(ativada);
@@ -55,13 +55,13 @@ public class Controller {
         gui.cepField.setEditable(ativada);
     }
     
-    public static void caixasTextoCombustivelAtivadas(boolean ativada){
+    private static void caixasTextoCombustivelAtivadas(boolean ativada){
         gui.tipoCombustivelField1.setEditable(ativada);
         gui.dataCombustivelField.setEditable(ativada);
         gui.precoCombustivelField.setEditable(ativada);
     }
     
-    public static void preencherCaixasTexto(){
+    private static void preencherCaixasTexto(){
         Posto postoSelecionado = (Posto) gui.postosBox.getSelectedItem();
         if(postoSelecionado != null){
             gui.nomeField.setText(postoSelecionado.toString());
@@ -79,13 +79,13 @@ public class Controller {
     
     }
     
-    public static void atualizarBox(){
+    private static void atualizarBox(){
         gui.postosBox.removeAllItems();
         for (Posto listaPosto : gui.listaPostos)
             gui.postosBox.addItem(listaPosto);
     }
     
-    public static void atualizarListaCombustiveis(){
+    private static void atualizarListaCombustiveis(){
         Posto postoSelecionado = (Posto) gui.postosBox.getSelectedItem();
         DefaultListModel model1 = new DefaultListModel();
         
@@ -98,7 +98,7 @@ public class Controller {
         atualizarListaHistorico();
     }
     
-    public static void atualizarCaixasCombustiveis(){
+    private static void atualizarCaixasCombustiveis(){
         Combustivel combustivelSelecionado = (Combustivel) gui.listaCombustiveisList.getSelectedValue();
         if(combustivelSelecionado != null){
             gui.tipoCombustivelField1.setText(combustivelSelecionado.getTipo());
@@ -112,7 +112,7 @@ public class Controller {
         }  
     }
     
-    public static void atualizarListaHistorico(){
+    private static void atualizarListaHistorico(){
         Combustivel combustivelSelecionado = (Combustivel) gui.listaCombustiveisList.getSelectedValue();
         DefaultListModel model1 = new DefaultListModel();
         
@@ -123,7 +123,7 @@ public class Controller {
         gui.listaHistoricoPrecos.setModel(model1);
     }
     
-    public static ImageIcon redimensionarEConverter(String imagemAntigaString){
+    private static ImageIcon redimensionarEConverter(String imagemAntigaString){
         ImageIcon icone = new ImageIcon(imagemAntigaString);
             
         Image imagem = icone.getImage();
@@ -138,16 +138,17 @@ public class Controller {
     }
     
     public static void botaoAdicionarEvento(){
-        limparTodasCaixasTexto();
-        caixasTextoPostoAtivadas(true);
-        gui.postosBox.setEnabled(false);
-        gui.botaoSalvar.setEnabled(true);
-            
         Posto novoPosto = new Posto();
         gui.listaPostos.add(novoPosto);
         atualizarBox();
         gui.postosBox.setSelectedItem(novoPosto);
+        
+        caixasTextoPostoAtivadas(true);
+        gui.postosBox.setEnabled(false);
+        gui.botaoSalvar.setEnabled(true);
+        preencherCaixasTexto();
         atualizarListaCombustiveis();
+        
     }
     
     public static void botaoEditarEvento() {                                            
@@ -277,20 +278,18 @@ public class Controller {
         }
     }
     
-    public static void main(String[] Args) throws FileNotFoundException, IOException{
-        ArrayList<Posto> listaPostosR = new ArrayList<>();
-        
-        Posto postoAdicionado;
-        String csvFile = "C:\\Users\\GoingS\\Desktop\\postos.csv";
+    
+    private static ArrayList<Posto> lerPostos(ArrayList<Posto> listaPostosNova, String local){
         BufferedReader br;
         String linha;
         
         
-        
         try {
-            br = new BufferedReader(new FileReader(csvFile));
+            Posto postoAdicionado;
+            br = new BufferedReader(new FileReader(local + "\\postos.csv"));
             
             while((linha = br.readLine()) != null){
+                
                 String[] valores = linha.split(",");
                 postoAdicionado = new Posto();
                 
@@ -302,7 +301,41 @@ public class Controller {
                 postoAdicionado.setEndereco(valores[5]);
                 postoAdicionado.setRazaoSocial(valores[6]);
                 
-                listaPostosR.add(postoAdicionado);
+                listaPostosNova.add(postoAdicionado);
+            } 
+        } catch (FileNotFoundException e) {
+        }
+        catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listaPostosNova;
+    }
+    
+    private static ArrayList<Posto> lerCombustiveis(ArrayList<Posto> listaPostosNova, String local){
+        BufferedReader br;
+        String linha;
+        
+        try {
+            Combustivel combustivelAdicionado;
+            Posto postoDoCombustivel;
+            br = new BufferedReader(new FileReader(local + "\\combustiveis.csv"));
+            
+            
+            while((linha = br.readLine()) != null){
+                String[] valores = linha.split(",");
+                postoDoCombustivel = Posto.buscarPosto(listaPostosNova, valores[0]);
+                
+                if(postoDoCombustivel != null){
+                    combustivelAdicionado = new Combustivel();
+                    
+                    combustivelAdicionado.setTipo(valores[1]);
+                    combustivelAdicionado.setData(Data.stringToData(valores[2]));
+                    combustivelAdicionado.setPreco(Float.parseFloat(valores[3]));
+                    postoDoCombustivel.addCombustivel(combustivelAdicionado);
+                }
+                
+                
             } 
         } catch (FileNotFoundException e) {
         }
@@ -311,42 +344,59 @@ public class Controller {
         }
         
         
+        return listaPostosNova;
+    }
+    
+    private static ArrayList<Posto> lerHistorico(ArrayList<Posto> listaPostosNova, String local){
+        BufferedReader br;
+        String linha;
+        
+        try {
+            Posto postoDoCombustivel;
+            Combustivel combustivelDoHistorico = null;
+            Historico historicoSelecionado;
+            
+            br = new BufferedReader(new FileReader(local + "\\historicos.csv"));
+            
+            
+            while((linha = br.readLine()) != null){
+                String[] valores = linha.split(",");
+                postoDoCombustivel = Posto.buscarPosto(listaPostosNova, valores[0]);
+                if(postoDoCombustivel != null)
+                    combustivelDoHistorico = Combustivel.buscarCombustivel(postoDoCombustivel.getCombustiveis(), valores[1]);
+                
+                if(combustivelDoHistorico != null){
+                    historicoSelecionado = new Historico();
+                    
+                    historicoSelecionado.setData(Data.stringToData(valores[2]));
+                    historicoSelecionado.setPreco(Float.parseFloat(valores[3]));
+                    
+                    combustivelDoHistorico.getHistorico().add(historicoSelecionado);
+                }
+                
+                
+            } 
+        } catch (FileNotFoundException e) {
+        }
+        catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listaPostosNova;
+    }
+    
+    
+    public static void main(String[] Args) throws FileNotFoundException, IOException{
+        ArrayList<Posto> listaPostosR = new ArrayList<>();
+        
+        String localCsv = "C:\\Users\\GoingS\\Desktop";
+        
+        listaPostosR = lerPostos(listaPostosR, localCsv);
+        listaPostosR = lerCombustiveis(listaPostosR, localCsv);
+        listaPostosR = lerHistorico(listaPostosR, localCsv);
         
         
         
-        
-                       
-        /*Combustivel c1 = new Combustivel("Etanol", new Data(20,11,2015), 2.12f);
-        Combustivel c2 = new Combustivel("Diesel", new Data(20,11,2015), 3.12f);
-        Combustivel c3 = new Combustivel("Gasolina", new Data(20,11,2015), 3.59f);
-        
-        Posto p1 = new Posto();
-        p1.setBairro("Centro");
-        p1.setBandeira("BR");
-        p1.setCep("97010040");
-        p1.setCnpj("12345678/0001-02");
-        p1.setEndereco("Rua dos Andradas, 1235");
-        p1.setNome("Meu Posto");
-        p1.setRazaoSocial("Razao");
-        
-        
-        Posto p2 = new Posto();
-        p2.setBairro("ASDSAD");
-        p2.setBandeira("BR");
-        p2.setCep("SD");
-        p2.setCnpj("gGGGG/fefe-02");
-        p2.setEndereco("Rua dos Andradas, 448949");
-        p2.setNome("Postão");
-        p2.setRazaoSocial("grgr");
-        
-        
-        p1.addCombustivel(c1);
-        p1.addCombustivel(c2);
-        p1.addCombustivel(c3);
-        p1.rmvCombustivel("Etanol");
-        
-        listaPostosR.add(p1);
-        listaPostosR.add(p2);*/
         
         gui = new PostosDeCombustiveisGUI(listaPostosR);
         gui.setVisible(true);

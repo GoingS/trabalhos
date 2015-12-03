@@ -30,6 +30,7 @@ public class Data {
     
     public static Data stringToData(String dataEmString){
         int diaNovo, mesNovo, anoNovo;
+        dataEmString = dataEmString.replace(" ", ""); 
         String[] valores = dataEmString.split("/");
         
         if(valores.length == 3){

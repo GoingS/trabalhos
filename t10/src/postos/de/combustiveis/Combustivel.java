@@ -72,4 +72,12 @@ public class Combustivel {
     public ArrayList<Historico> getHistorico(){
         return this.historicoDePrecos;
     }
+    
+    public static Combustivel buscarCombustivel(ArrayList<Combustivel> listaCombustiveis, String tipoProcurado){
+        for(Combustivel combustivelX : listaCombustiveis){
+            if(combustivelX.tipo.equals(tipoProcurado))
+                return combustivelX;
+        }
+        return null;
+    }
 }

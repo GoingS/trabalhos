@@ -24,6 +24,11 @@ public class Historico {
         return this.dataDeAlteracao.toString() + " - " + this.preco;
     }
     
+    public String toCsv(){
+        return (this.dataDeAlteracao.toString() + "," +
+                this.preco);      
+    }
+    
     public void setPreco(float novoPreco){
         this.preco = novoPreco;
     }

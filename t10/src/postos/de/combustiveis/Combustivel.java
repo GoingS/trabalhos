@@ -32,8 +32,14 @@ public class Combustivel {
         return this.tipo;
     }
     
-    public void alterarPrecoComHistorico(float novoPreco, Data novaData){
-        this.historicoDePrecos.add(new Historico(this.preco, this.dataColetaPreco));
+    public String toCsv(){
+        return (this.tipo + "," +
+                this.dataColetaPreco.toString() + "," +
+                this.preco);
+    }
+    
+    public void alterarPrecoComHistorico(float novoPreco, Data novaData){    
+        this.historicoDePrecos.add(new Historico(novoPreco, novaData));
         this.preco = novoPreco;
         this.dataColetaPreco = novaData;
     }

@@ -3,10 +3,13 @@ package Controller;
 
 import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +28,7 @@ public class Controller {
     private static PostosDeCombustiveisGUI gui;
     private static final int alturaImagem = 152;
     private static final int larguraImagem = 275;
-    
+    private static final String localCsv = System.getProperty("user.dir") + "\\recursos\\csv";
     
     private static void limparTodasCaixasTexto(){
         gui.nomeField.setText("");
@@ -152,7 +155,7 @@ public class Controller {
     }
     
     public static void botaoEditarEvento() {                                            
-        if(!gui.listaPostos.isEmpty()){
+        if(gui.postosBox.getSelectedItem() != null){
             gui.botaoSalvar.setEnabled(true);
             gui.postosBox.setEnabled(false);
             Controller.caixasTextoPostoAtivadas(true);
@@ -170,6 +173,8 @@ public class Controller {
         postoSelecionado.setBairro(gui.bairroField.getText());
         postoSelecionado.setCep(gui.cepField.getText());
         
+        atualizarPostoCsv(gui.listaPostos);
+        
         caixasTextoPostoAtivadas(false);
         gui.botaoSalvar.setEnabled(false);
         gui.postosBox.setEnabled(true);
@@ -186,6 +191,8 @@ public class Controller {
                 gui.postosBox.setSelectedIndex(0);
             else
                 gui.postosBox.setSelectedItem(null);
+            
+            atualizarPostoCsv(gui.listaPostos);
             preencherCaixasTexto();
             atualizarListaCombustiveis();
         }
@@ -224,6 +231,8 @@ public class Controller {
 
             postoSelecionado.getCombustiveis().remove(combustivelSelecionado);
             atualizarListaCombustiveis();
+            
+            atualizarCombustivelCsv(gui.listaPostos);
         }
     }
     
@@ -257,6 +266,9 @@ public class Controller {
         atualizarCaixasCombustiveis();
         atualizarListaHistorico();
         gui.listaCombustiveisList.setSelectedValue(combustivelSelecionado, true);
+        
+        atualizarCombustivelCsv(gui.listaPostos);
+        atualizarHistoricoCsv(gui.listaPostos);
     }
     
     public static void botaoPesquisarPostosEvento() {                                                     
@@ -268,13 +280,17 @@ public class Controller {
     }
     
     public static void botaoProcurarImagemEvento(){
-        JFileChooser fc = new JFileChooser();
-        if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-            File f = fc.getSelectedFile();
-            String localArquivo = f.getAbsolutePath();
-            Posto postoSelecionado = (Posto) gui.postosBox.getSelectedItem();
-            postoSelecionado.setImagem(localArquivo);
-            gui.labelImagem.setIcon(redimensionarEConverter(localArquivo));
+        if(gui.postosBox.getSelectedItem() != null){
+            JFileChooser fc = new JFileChooser();
+            if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                File f = fc.getSelectedFile();
+                String localArquivo = f.getAbsolutePath();
+                Posto postoSelecionado = (Posto) gui.postosBox.getSelectedItem();
+                postoSelecionado.setImagem(localArquivo);
+                gui.labelImagem.setIcon(redimensionarEConverter(localArquivo));
+                
+                atualizarPostoCsv(gui.listaPostos);
+            }
         }
     }
     
@@ -282,7 +298,6 @@ public class Controller {
     private static ArrayList<Posto> lerPostos(ArrayList<Posto> listaPostosNova, String local){
         BufferedReader br;
         String linha;
-        
         
         try {
             Posto postoAdicionado;
@@ -300,6 +315,7 @@ public class Controller {
                 postoAdicionado.setCnpj(valores[4]);
                 postoAdicionado.setEndereco(valores[5]);
                 postoAdicionado.setRazaoSocial(valores[6]);
+                postoAdicionado.setImagem(valores[7]);
                 
                 listaPostosNova.add(postoAdicionado);
             } 
@@ -386,10 +402,97 @@ public class Controller {
     }
     
     
+    
+    private static void adicionarPostoCsv(Posto postoNovo){
+        try {
+            BufferedWriter escritor = new BufferedWriter(new FileWriter(localCsv + "\\postos.csv", true));
+            escritor.append(postoNovo.toCsv() + '\n');
+            escritor.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private static void atualizarPostoCsv(ArrayList<Posto> listaPostos){
+        
+         try {
+            PrintWriter escritorPrint = new PrintWriter(new FileWriter(localCsv + "\\postos.csv"));
+            
+            escritorPrint.print("");
+            
+            for(Posto x : listaPostos)
+                adicionarPostoCsv(x);
+            
+            escritorPrint.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private static void adicionarCombustivelCsv(Combustivel combustivelNovo, Posto postoDeOrigem){
+        try {
+            BufferedWriter escritor = new BufferedWriter(new FileWriter(localCsv + "\\combustiveis.csv", true));
+            escritor.append(postoDeOrigem.toString() + ',' + combustivelNovo.toCsv());
+            escritor.newLine(); // CARE
+            escritor.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private static void atualizarCombustivelCsv(ArrayList<Posto> listaPostos){
+        try {
+            PrintWriter escritorPrint = new PrintWriter(new FileWriter(localCsv + "\\combustiveis.csv"));
+            
+            escritorPrint.print("");
+            
+            for(Posto p : listaPostos)
+                for(Combustivel c : p.getCombustiveis())
+                    adicionarCombustivelCsv(c, p);
+            
+            escritorPrint.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private static void adicionarHistoricoCsv(Historico HistoricoNovo, Combustivel combustivelDeOrigem, Posto postoDeOrigem){
+        try {
+            BufferedWriter escritor = new BufferedWriter(new FileWriter(localCsv + "\\historicos.csv", true));
+            
+            escritor.append(postoDeOrigem.toString() + ',' + combustivelDeOrigem.toString() + ',' + HistoricoNovo.toCsv());
+            escritor.newLine(); // CARE
+            escritor.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private static void atualizarHistoricoCsv(ArrayList<Posto> listaPostos){
+        try {
+            PrintWriter escritorPrint = new PrintWriter(new FileWriter(localCsv + "\\historicos.csv"));
+            
+            escritorPrint.print("");
+            
+            for(Posto p : listaPostos)
+                for(Combustivel c : p.getCombustiveis())
+                    for(Historico h : c.getHistorico())
+                        adicionarHistoricoCsv(h, c, p);
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static void main(String[] Args) throws FileNotFoundException, IOException{
         ArrayList<Posto> listaPostosR = new ArrayList<>();
         
-        String localCsv = "C:\\Users\\GoingS\\Desktop";
         
         listaPostosR = lerPostos(listaPostosR, localCsv);
         listaPostosR = lerCombustiveis(listaPostosR, localCsv);

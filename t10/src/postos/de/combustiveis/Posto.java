@@ -25,7 +25,7 @@ public class Posto {
         endereco = "";
         bairro = "";
         cep = "";
-        imagem = System.getProperty("user.dir") + "\\src\\imagens\\SemImagem.png";
+        imagem = System.getProperty("user.dir") + "\\recursos\\imagens\\SemImagem.png";
         combustiveis = new ArrayList<>();
     }
     
@@ -48,6 +48,16 @@ public class Posto {
         return this.nomeFantasia;
     }
     
+    public String toCsv(){
+        return (this.nomeFantasia+","+
+                this.bairro+","+
+                this.bandeira+","+
+                this.cep+","+
+                this.cnpj+","+
+                this.endereco+","+
+                this.razaoSocial+","+
+                this.imagem);
+    }
     
     public String getCnpj(){
         return this.cnpj;

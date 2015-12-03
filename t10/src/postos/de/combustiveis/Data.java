@@ -23,7 +23,7 @@ public class Data {
      @Override
     public String toString(){
         if(this.dia == 0 && this.mes == 0 && this.ano == 0)
-            return "";
+            return "0/0/0";
         else
             return "" + this.dia + '/' + this.mes + '/' + this.ano;
     }

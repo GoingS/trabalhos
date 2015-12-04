@@ -3,6 +3,7 @@ package postos.de.combustiveisGUI;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import postos.de.combustiveis.Posto;
+import Controller.Controller;
 
 /**
  *
@@ -12,39 +13,17 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form postosPesquisadosGUI
-     * @param listaPostos
      */
     
-    private ArrayList<Posto> listaPostos;
+    public ArrayList<Posto> listaPostos;
     
     public PostosPesquisadosGUI(ArrayList<Posto> novaListaPostos) {
         initComponents();
         this.listaPostos = novaListaPostos;
     }
 
-    private PostosPesquisadosGUI() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    private void atualizarListaPostosPesquisados(){
-        DefaultListModel model1 = new DefaultListModel();
-        
-        
-        for(Posto posto : this.buscarPostosPorBairro(listaPostos, postoPesquisadoField.getText()))
-            model1.addElement(posto);
-        
-        listaPostosPesquisados.setModel(model1);
-    }
-    
-    private ArrayList<Posto> buscarPostosPorBairro(ArrayList<Posto> listaPostos, String bairroProcurado){
-        ArrayList<Posto> postosDoBairro = new ArrayList<>(); 
-        
-        for (Posto listaPosto : listaPostos){
-            if (listaPosto.getBairro().equals(bairroProcurado))
-                postosDoBairro.add(listaPosto);
-        }
-            
-        return postosDoBairro;
+    public PostosPesquisadosGUI() {
+        initComponents();
     }
     
     
@@ -61,7 +40,7 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaPostosPesquisados = new javax.swing.JList();
-        botaoOkPostosPesquisados = new javax.swing.JButton();
+        botaoFecharPostosPesquisados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,10 +54,10 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(listaPostosPesquisados);
 
-        botaoOkPostosPesquisados.setText("Fechar");
-        botaoOkPostosPesquisados.addActionListener(new java.awt.event.ActionListener() {
+        botaoFecharPostosPesquisados.setText("Fechar");
+        botaoFecharPostosPesquisados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoOkPostosPesquisadosActionPerformed(evt);
+                botaoFecharPostosPesquisadosActionPerformed(evt);
             }
         });
 
@@ -91,7 +70,7 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1)
                     .addComponent(postoPesquisadoField)
-                    .addComponent(botaoOkPostosPesquisados, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(botaoFecharPostosPesquisados, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -107,7 +86,7 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(postoPesquisadoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(botaoOkPostosPesquisados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(botaoFecharPostosPesquisados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -115,12 +94,12 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void postoPesquisadoFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_postoPesquisadoFieldCaretUpdate
-        this.atualizarListaPostosPesquisados();
+        Controller.postosPesquisadosFieldEvento();
     }//GEN-LAST:event_postoPesquisadoFieldCaretUpdate
 
-    private void botaoOkPostosPesquisadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOkPostosPesquisadosActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_botaoOkPostosPesquisadosActionPerformed
+    private void botaoFecharPostosPesquisadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFecharPostosPesquisadosActionPerformed
+        Controller.botaoFecharPostosPesquisadosEvento();
+    }//GEN-LAST:event_botaoFecharPostosPesquisadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,10 +145,10 @@ public class PostosPesquisadosGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoOkPostosPesquisados;
+    public javax.swing.JButton botaoFecharPostosPesquisados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList listaPostosPesquisados;
-    private javax.swing.JTextField postoPesquisadoField;
+    public javax.swing.JList listaPostosPesquisados;
+    public javax.swing.JTextField postoPesquisadoField;
     // End of variables declaration//GEN-END:variables
 }

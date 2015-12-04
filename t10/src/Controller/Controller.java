@@ -26,6 +26,7 @@ import postos.de.combustiveisGUI.PostosPesquisadosGUI;
 public class Controller {
     
     private static PostosDeCombustiveisGUI gui;
+    private static PostosPesquisadosGUI guiPesquisa;
     private static final int alturaImagem = 152;
     private static final int larguraImagem = 275;
     private static final String localCsv = System.getProperty("user.dir") + "\\recursos\\csv";
@@ -132,6 +133,23 @@ public class Controller {
         Image imagem = icone.getImage();
         Image novaImagem = imagem.getScaledInstance(larguraImagem, alturaImagem, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(novaImagem);
+    }
+    
+    public static ArrayList<Posto> buscarPostosPorBairro(ArrayList<Posto> listaPostos, String bairroProcurado){
+        ArrayList<Posto> postosDoBairro = new ArrayList<>(); 
+        
+        for (Posto listaPosto : listaPostos)
+            if (listaPosto.getBairro().equals(bairroProcurado))
+                postosDoBairro.add(listaPosto);
+        return postosDoBairro;
+    }
+    
+    public static void atualizarListaPostosPesquisados(){
+        DefaultListModel model1 = new DefaultListModel();
+        
+        for(Posto posto : buscarPostosPorBairro(guiPesquisa.listaPostos, guiPesquisa.postoPesquisadoField.getText()))
+            model1.addElement(posto);
+        guiPesquisa.listaPostosPesquisados.setModel(model1);
     }
     
     
@@ -271,11 +289,11 @@ public class Controller {
         atualizarHistoricoCsv(gui.listaPostos);
     }
     
+    
     public static void botaoPesquisarPostosEvento() {                                                     
         if(!gui.listaPostos.isEmpty()){
-            PostosPesquisadosGUI postosPesquisados = new PostosPesquisadosGUI(gui.listaPostos);
-            postosPesquisados.setTitle("Pesquisando postos");
-            postosPesquisados.setVisible(true);
+            guiPesquisa = new PostosPesquisadosGUI(gui.listaPostos);
+            guiPesquisa.setVisible(true);
         }
     }
     
@@ -293,6 +311,16 @@ public class Controller {
             }
         }
     }
+    
+    public static void botaoFecharPostosPesquisadosEvento(){
+        guiPesquisa.setVisible(false);
+    }
+    
+    public static void postosPesquisadosFieldEvento(){
+        atualizarListaPostosPesquisados();
+    }
+    
+    
     
     
     private static ArrayList<Posto> lerPostos(ArrayList<Posto> listaPostosNova, String local){
@@ -406,7 +434,8 @@ public class Controller {
     private static void adicionarPostoCsv(Posto postoNovo){
         try {
             BufferedWriter escritor = new BufferedWriter(new FileWriter(localCsv + "\\postos.csv", true));
-            escritor.append(postoNovo.toCsv() + '\n');
+            escritor.append(postoNovo.toCsv());
+            escritor.newLine();
             escritor.close();
             
         } catch (IOException ex) {
